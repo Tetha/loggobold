@@ -16,6 +16,9 @@ func main() {
 	for len(remainingArgs) > 0 {
 		fmt.Printf("%s\n", remainingArgs)
 		found := false
+		if len(remainingArgs[0]) == 0 {
+			continue
+		}
 		for _, plugin := range loggobold.Columns {
 			if plugin.ShortArg() == remainingArgs[0][1:] {
 				found = true
@@ -26,6 +29,7 @@ func main() {
 				}
 				outputColumns = append(outputColumns, column)
 				remainingArgs = newRemainingArgs
+				break
 			}
 		}
 		if !found {
@@ -45,7 +49,7 @@ func main() {
 		columnCount := len(outputColumns)
 		for i, column := range outputColumns {
 			fmt.Printf("%s", column.Contents(lineNumber))
-			if i < columnCount {
+			if i+1 < columnCount {
 				fmt.Printf("|")
 			} else {
 				fmt.Printf("]")
